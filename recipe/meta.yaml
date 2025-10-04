@@ -1,23 +1,24 @@
 {% set name = "python-sscha" %}
-{% set version = "1.4.1" %}
+{% set version = "1.5.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python-sscha-{{ version }}.tar.gz
-  sha256: 484cf3215306d2b28bb4e2b01c9adccebc604a2323041d244624667bcdf74782
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
+  sha256: 26364498bb1a21d42e504fdf688fea5a0d49cd5a55c0a6e5b9383983219db937
 
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 3
+  number: 0
   skip: true  # [not linux]
 
 requirements:
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - llvm-openmp  # [osx]
     - libgomp      # [linux]
   host:
@@ -32,6 +33,11 @@ requirements:
     - libblas
     - liblapack
   run:
+    - ase
+    - cellconstructor
+    - matplotlib-base
+    - scipy
+    - spglib
     - python
     - {{ pin_compatible('numpy') }}
 
