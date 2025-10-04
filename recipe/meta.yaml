@@ -22,6 +22,7 @@ requirements:
     - llvm-openmp  # [osx]
     - libgomp      # [linux]
     - cmake
+    - pkg-config
   host:
     - python
     - numpy
