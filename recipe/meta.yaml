@@ -32,6 +32,7 @@ requirements:
     - pip
     - libblas
     - liblapack
+    - meson-python
   run:
     - ase
     - cellconstructor
