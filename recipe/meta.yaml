@@ -1,5 +1,5 @@
 {% set name = "python-sscha" %}
-{% set version = "1.5.0" %}
+{% set version = "1.6.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,11 +7,11 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
-  sha256: 26364498bb1a21d42e504fdf688fea5a0d49cd5a55c0a6e5b9383983219db937
+  sha256: 09d20b5baec1360a7e011c7d43b8300b03dd2c2b03c51233f01eac2f06eb6bd3
 
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+  number: 0
   skip: true  # [not linux]
 
 requirements:
