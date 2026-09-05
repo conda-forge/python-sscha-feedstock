@@ -1,0 +1,66 @@
+schema_version: 1
+
+context:
+  name: python-sscha
+  version: "1.6.1"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name | replace('-', '_') }}-${{ version }}.tar.gz
+  sha256: 739bf71026580ba53a8ffd90230485d456e63a3b2780b9d2c6cc427d7284f3e7
+
+build:
+  number: 1
+  skip: not linux
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  build:
+    - ${{ compiler('fortran') }}
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - if: osx
+      then: llvm-openmp
+    - if: linux
+      then: libgomp
+    - cmake
+    - pkg-config
+  host:
+    - python
+    - numpy
+    - ase
+    - scipy
+    - cellconstructor
+    - spglib
+    - matplotlib-base
+    - pip
+    - libblas
+    - liblapack
+    - meson-python
+  run:
+    - ase
+    - cellconstructor
+    - matplotlib-base
+    - scipy
+    - spglib
+    - python
+    - ${{ pin_compatible('numpy') }}
+
+tests:
+  - python:
+      imports:
+        - sscha
+      pip_check: true
+
+about:
+  summary: Python implementation of the sscha code
+  license: GPL-3.0-or-later
+  license_file: LICENSE.txt
+  homepage: https://github.com/mesonepigreco/python-sscha
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
